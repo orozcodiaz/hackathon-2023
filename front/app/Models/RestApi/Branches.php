@@ -17,6 +17,6 @@ class Branches extends RestApiConnector
             ['id' => 1, 'name' => 'HFH of the Upper Keys', 'address' => '98970 Overseas Highway, Key Largo, FL 33037-5267'],
         ];
 
-        return json_encode($response);
+        return response()->json($response);
     }
 }

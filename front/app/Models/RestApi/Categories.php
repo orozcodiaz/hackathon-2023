@@ -17,6 +17,6 @@ class Categories extends RestApiConnector
             ['id' => 5, 'name' => 'Poor']
         ];
 
-        return json_encode($response);
+        return response()->json($response);
     }
 }
