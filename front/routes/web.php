@@ -37,4 +37,12 @@ Route::prefix('/api/v1/')->group(function () {
     // Get all categories
     Route::get('/categories', [\App\Models\RestApi\Categories::class, 'getCategories'])
         ->name('get-categories');
+
+    // Get all products
+    Route::get('/products', [\App\Models\RestApi\Products::class, 'getProducts'])
+        ->name('get-products');
+
+    // Get all products by branch ID
+    Route::get('/products/branch/{id}', [\App\Models\RestApi\Products::class, 'getProducts'])
+        ->name('get-products');
 });
