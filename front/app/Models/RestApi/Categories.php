@@ -3,10 +3,11 @@
 namespace App\Models\RestApi;
 
 use App\Models\RestApiConnector;
+use Illuminate\Http\JsonResponse;
 
 class Categories extends RestApiConnector
 {
-    public function getCategories()
+    public function getCategories(): JsonResponse
     {
         // @TODO: call S api, get products as JSON
         $response = [

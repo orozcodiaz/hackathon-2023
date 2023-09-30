@@ -3,10 +3,11 @@
 namespace App\Models\RestApi;
 
 use App\Models\RestApiConnector;
+use Illuminate\Http\JsonResponse;
 
 class Conditions extends RestApiConnector
 {
-    public function getConditions()
+    public function getConditions(): JsonResponse
     {
         // @TODO: call S api, get products as JSON
         $response = [

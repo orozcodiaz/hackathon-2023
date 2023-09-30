@@ -3,10 +3,11 @@
 namespace App\Models\RestApi;
 
 use App\Models\RestApiConnector;
+use Illuminate\Http\JsonResponse;
 
 class Branches extends RestApiConnector
 {
-    public function getBranches()
+    public function getBranches(): JsonResponse
     {
         // @TODO: call S api, get branches as JSON
         $response = [
