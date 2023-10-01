@@ -20,15 +20,8 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function showBranchesPage()
-    {
-        $branchesModel = new \App\Models\RestApi\Branches();
-        $branchesList = json_decode($branchesModel->getBranches(), 1);
-        return view('branches', compact('branchesList'));
-    }
-
     public function getProductsByCategory($categoryTitle)
     {
-        // Send request to pull
+        return view('products-by-category', compact('categoryTitle'));
     }
 }
