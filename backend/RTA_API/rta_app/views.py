@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
+from rest_framework.generics import RetrieveAPIView
+
 from .models import Category, Condition, Product, Inventory, Branch
 from .serializers import CategorySerializer, ConditionSerializer, ProductSerializer, ProductCreateSerializer, BranchSerializer
 
@@ -48,5 +50,12 @@ class ProductByBranch(generics.ListAPIView):
 class BranchListCreateView(generics.ListCreateAPIView):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
+
+
+class ProductDetailView(RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
 
 
