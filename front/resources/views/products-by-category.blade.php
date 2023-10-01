@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Real Time Availability System') }}</div>
+                <div class="card-header"><a href="{{route('home')}}">{{ __('Real Time Availability System') }}</a> | Products in category "{{$categoryTitle}}"</div>
 
                 @include('nav')
 
@@ -33,7 +33,7 @@
             $.ajax({
                 dataType: 'json',
                 async: false,
-                url: '{{ route('get-products-view') }}',
+                url: '{{ route('get-products-by-category-view', ['categoryTitle' => $categoryTitle]) }}',
                 success: function(data) {
                     $('#loaded-products').html(data.content);
                     $('#loader-image').hide();
