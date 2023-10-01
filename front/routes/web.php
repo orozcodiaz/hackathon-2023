@@ -23,8 +23,10 @@ Auth::routes(['register' => false]);
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/products/create', [App\Http\Controllers\Products::class, 'createProductPage'])->name('createProductPage');
+    Route::post('/products/save', [App\Http\Controllers\Products::class, 'saveProduct'])->name('saveProduct');
     Route::get('/category/{categoryTitle}', [App\Http\Controllers\HomeController::class, 'getProductsByCategory'])->name('getProductsByCategory');
-    Route::get('/branches', [App\Http\Controllers\HomeController::class, 'showBranchesPage'])->name('showBranchesPage');
+    Route::get('/branches', [App\Http\Controllers\Branches::class, 'showBranchesPage'])->name('showBranchesPage');
+    Route::get('/conditions', [App\Http\Controllers\Conditions::class, 'showConditionsPage'])->name('showConditionsPage');
 });
 
 // External routes
@@ -53,4 +55,7 @@ Route::prefix('/api/v1/')->group(function () {
 // Views
 Route::get('/internal/getProductsView', [\App\Models\RestApi\Products::class, 'getProductsView'])
     ->name('get-products-view');
+
+Route::get('/internal/getProductsByCategoryView/{categoryTitle}', [\App\Models\RestApi\Products::class, 'getProductsViewByCategory'])
+    ->name('get-products-by-category-view');
 
