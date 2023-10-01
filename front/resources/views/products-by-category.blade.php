@@ -3,11 +3,19 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
+            <h3>Current Branch: <span id="currentBranch">
+                    <img id="loader-image2" width="30px" src="{{asset('assets/loader.gif')}}" alt="Loading..." />
+                </span>
+            </h3>
             <div class="card">
                 <div class="card-header"><a href="{{route('home')}}">{{ __('Real Time Availability System') }}</a> | Products in category "{{$categoryTitle}}"</div>
 
-                @include('nav')
+                <div class="card-navigation">
+                    <a href="{{route('home')}}" class="btn btn-primary m-2">Show All Items</a>
+                    <a href="{{route('showBranchesPage')}}" class="btn btn-warning m-2" id="branchesBtn">Branches</a>
+                    <a href="{{route('showConditionsPage')}}" class="btn btn-warning m-2">Conditions</a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))

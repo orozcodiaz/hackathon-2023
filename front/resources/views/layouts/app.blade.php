@@ -82,5 +82,23 @@
 
     <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
     @yield('scripts')
+
+    <script>
+        $(document).ready(function() {
+            // Get Products view
+            $.ajax({
+                dataType: 'json',
+                async: false,
+                url: '{{ route('getBranchNameById', getenv('BRANCH_ID')) }}',
+                success: function(data) {
+                    $('#currentBranch').html(data.content)
+                },
+                error: function(jqxhr, textStatus, error) {
+                    alert("Request failed: " + textStatus + ", " + error);
+                }
+            });
+
+        });
+    </script>
 </body>
 </html>

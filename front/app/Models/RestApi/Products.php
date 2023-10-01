@@ -30,6 +30,17 @@ class Products extends RestApiConnector
         return response()->json(json_decode($response, 1));
     }
 
+    public function getProductById($productId, $asReturn = false)
+    {
+        $response = $this->getBackendData('/api/v1/products/' . $productId);
+
+        if ($asReturn === true) {
+            return json_decode($response, 1);
+        }
+
+        return response()->json(json_decode($response, 1));
+    }
+
     public function getProductsView(Request $request)
     {
         $categoriesModel = new Categories();
@@ -45,13 +56,18 @@ class Products extends RestApiConnector
 
         $products = $this->getProducts(true);
 
+        rsort($products);
+
         foreach ($products as &$product) {
             $totalQty = 0;
-            foreach ($product['branches'] as $branchCode => $qtyValue) {
-                $totalQty += $qtyValue;
+            if (isset($product['branches'])) {
+                foreach ($product['branches'] as $qtyValue) {
+                    $totalQty += $qtyValue;
+                }
             }
 
             $product['totalQty'] = $totalQty;
+            $product['picture'] = $this->getRandomPicture();
 
             $categoryTitle = $categories[$product['category']];
             $product['category'] = '<a href="'.route('getProductsByCategory', ['categoryTitle' => $categoryTitle]).'">'.$categoryTitle.'</a>';
@@ -64,35 +80,49 @@ class Products extends RestApiConnector
         ]);
     }
 
+    protected function getRandomPicture()
+    {
+        $files = glob(public_path('assets/img/') . '*.png');
+        $randomIndex = array_rand($files);
+        $pathInfo = pathinfo($files[$randomIndex]);
+        return $pathInfo['basename'];
+    }
+
     public function getProductsViewByCategory($categoryTitle)
     {
-//        $categoriesModel = new Categories();
-//        $conditionsModel = new Conditions();
-//        $categories = $this->getConvertedArray(
-//            json_decode($categoriesModel->getCategories(), 1)
-//        );
-//
-//        $conditions = $this->getConvertedArray(
-//            json_decode($conditionsModel->getConditions(), 1)
-//        );
+        $categoriesModel = new Categories();
+        $conditionsModel = new Conditions();
+        $categories = $this->getConvertedArray(
+            $categoriesModel->getCategories(true)
+        );
+
+        $conditions = $this->getConvertedArray(
+            $conditionsModel->getConditions(true)
+        );
 
         $products = $this->getProductsByCategory($categoryTitle, true);
 
-        echo 'Using getProductsByCategory() ' . PHP_EOL;
-        echo 'Received products by category ' . $categoryTitle . ': ' . PHP_EOL;
-        print_r($products);
+//        echo 'Using getProductsByCategory() ' . PHP_EOL;
+//        echo 'Received products by category ' . $categoryTitle . ': ' . PHP_EOL;
+//        print_r($products);
+//
+//        die;
 
-        die;
+        //print_r($products); die;
+
+        rsort($products);
 
         foreach ($products as &$product) {
-            $branches = $product['branches'];
-
             $totalQty = 0;
-            foreach ($branches as $branch) {
-                $totalQty += $branch['qty'];
+
+            if (isset($product['branches'])) {
+                foreach ($product['branches'] as $qtyValue) {
+                    $totalQty += $qtyValue;
+                }
             }
 
             $product['totalQty'] = $totalQty;
+            $product['picture'] = $this->getRandomPicture();
 
             $categoryTitle = $categories[$product['category']];
             $product['category'] = $categoryTitle;

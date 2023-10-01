@@ -48,4 +48,39 @@ class Products extends Controller
         return redirect()->route('createProductPage')->with(['success' => 'Product was saved.']);
     }
 
+    public function editProductPage(Request $request, $productId)
+    {
+        $products = new \App\Models\RestApi\Products();
+        $productData = $products->getProductById($productId, true);
+
+        $branchMap = [];
+        $branchesModel = new \App\Models\RestApi\Branches();
+        $branchesList = $branchesModel->getBranches(true);
+
+        foreach ($branchesList as $branch) {
+            $branchMap[$branch['id']] = [
+                'name' => $branch['name'],
+                'address' => $branch['address'],
+            ];
+        }
+
+        $inventory = 0;
+        $currentBranchId = getenv('BRANCH_ID');
+        $branches = [];
+
+        foreach ($productData['branches'] as $branchId => $qty) {
+            $branches[] = [
+                'branch_id' => $branchId,
+                'branch_data' => $branchMap[$branchId],
+                'qty' => $qty
+            ];
+
+            if ((string)$branchId === $currentBranchId) {
+                $inventory = $qty;
+            }
+        }
+
+        return view('edit-product-page', compact('productData', 'branches', 'inventory'));
+    }
+
 }

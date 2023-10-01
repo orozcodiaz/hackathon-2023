@@ -15,14 +15,14 @@
         @foreach($products as $product)
             <tr>
                 <th scope="row">{{$product['id']}}</th>
-                <td>n/a</td>
+                <td><img width="20" src="{{asset('assets/img/' . $product['picture'])}}"> </td>
                 <td><b>{{$product['sku']}}</b></td>
                 <td>{{$product['name']}}</td>
                 <td>{!! $product['category'] !!}</td>
                 <td>{{$product['condition']}}</td>
                 <td>{{$product['totalQty']}}</td>
                 <td>
-                    <a href="">edit</a> | <a href="">delete</a>
+                    <a href="{{route('editProductPage', $product['id'])}}">edit</a>
                 </td>
             </tr>
         @endforeach
