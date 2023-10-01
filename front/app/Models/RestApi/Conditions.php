@@ -7,18 +7,14 @@ use Illuminate\Http\JsonResponse;
 
 class Conditions extends RestApiConnector
 {
-    public function getConditions()
+    public function getConditions($asReturn = false)
     {
-        // @TODO: call S api, get products as JSON
-        $response = [
-            ['id' => 1, 'name' => 'New'],
-            ['id' => 2, 'name' => 'Like New'],
-            ['id' => 3, 'name' => 'Good'],
-            ['id' => 4, 'name' => 'Fair'],
-            ['id' => 5, 'name' => 'Poor']
-        ];
+        $response = $this->getBackendData('/api/v1/conditions');
 
-        //return response()->json($response);
-        return json_encode($response);
+        if ($asReturn === true) {
+            return json_decode($response, 1);
+        }
+
+        return response()->json(json_decode($response, 1));
     }
 }

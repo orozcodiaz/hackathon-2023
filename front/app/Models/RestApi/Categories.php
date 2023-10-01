@@ -7,28 +7,14 @@ use Illuminate\Http\JsonResponse;
 
 class Categories extends RestApiConnector
 {
-    public function getCategories()
+    public function getCategories($asReturn = false)
     {
-        // @TODO: call S api, get products as JSON
-        $response = [
-            ['id' => 1, 'name' => 'Sofa'],
-            ['id' => 2, 'name' => 'Chair'],
-            ['id' => 3, 'name' => 'Table'],
-            ['id' => 4, 'name' => 'Bed'],
-            ['id' => 5, 'name' => 'Dresser'],
-            ['id' => 6, 'name' => 'Nightstand'],
-            ['id' => 7, 'name' => 'Wardrobe'],
-            ['id' => 8, 'name' => 'Bookcase'],
-            ['id' => 9, 'name' => 'Desk'],
-            ['id' => 10, 'name' => 'Dining Chair'],
-            ['id' => 11, 'name' => 'End Table'],
-            ['id' => 12, 'name' => 'Cabinet'],
-            ['id' => 13, 'name' => 'Entertainment Center'],
-            ['id' => 14, 'name' => 'Bench'],
-            ['id' => 15, 'name' => 'Cabinet']
-        ];
+        $response = $this->getBackendData('/api/v1/categories');
 
-        //return response()->json($response);
-        return json_encode($response);
+        if ($asReturn === true) {
+            return json_decode($response, 1);
+        }
+
+        return response()->json(json_decode($response, 1));
     }
 }
