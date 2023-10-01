@@ -76,6 +76,9 @@
                 <div class="card-header">Inventory</div>
                 <div class="card-body">
                     <h3>Inventory on current branch: {{$inventory}} items</h3>
+                    <br>
+                    <a href="" class="btn btn-success">Add Inventory</a>
+                    <a href="" class="btn btn-danger">Deduct Inventory</a>
                 </div>
             </div>
         </div>
