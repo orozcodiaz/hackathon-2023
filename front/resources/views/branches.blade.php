@@ -35,7 +35,7 @@
                                 <td>{{$branch['name']}}</td>
                                 <td>{{$branch['address']}}</td>
                                 <td>{{rand(10, 99)}}</td>
-                                <td><a href="">Show Products</a> </td>
+                                <td><a href="javascript:alert('Still in progress.')">Show Products</a> </td>
                             </tr>
                         @endforeach
                         </tbody>

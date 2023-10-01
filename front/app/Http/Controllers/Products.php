@@ -21,8 +21,11 @@ class Products extends Controller
     {
         $apiPayload = $request->post();
         unset($apiPayload['_token']);
+unset($apiPayload['files']);
 
         $curl = curl_init();
+
+//print_r($apiPayload);die;
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => getenv('BACKEND_SERVER') . '/api/v1/products/create',
